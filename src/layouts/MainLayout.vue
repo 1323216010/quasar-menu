@@ -64,7 +64,7 @@
 import { ref } from 'vue'
 
 const drawer = ref(true)
-const currentMenu = ref('Inbox')
+const currentMenu = ref('Outbox')
 
 const menuList = [
   { icon: 'inbox', label: 'Inbox', separator: true },
