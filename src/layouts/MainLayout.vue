@@ -1,6 +1,6 @@
 <template>
-  <div class="q-pa-none">
-    <q-layout view="hHh Lpr lff" container style="height: 410px" class="shadow-2 rounded-borders">
+  <div class="q-pa-none" style="height: 100vh;">
+    <q-layout view="hHh Lpr lff" container class="shadow-2 rounded-borders">
       <q-drawer
         v-model="drawer"
         :width="200"
@@ -52,7 +52,8 @@
             <p>Show Feedback Form Here</p>
           </div>
           <div v-if="currentMenu === 'Help'">
-            <p>Show Help Content Here</p>
+            <AppHelp></AppHelp>
+            <!-- <p>Show Help Content Here</p> -->
           </div>
         </q-page>
       </q-page-container>
@@ -62,9 +63,10 @@
 
 <script setup>
 import { ref } from 'vue'
+import AppHelp from '../components/AppHelp.vue'
 
 const drawer = ref(true)
-const currentMenu = ref('Outbox')
+const currentMenu = ref('Help')
 
 const menuList = [
   { icon: 'inbox', label: 'Inbox', separator: true },
