@@ -1,7 +1,6 @@
 <template>
   <div class="q-pa-none">
     <q-layout view="hHh Lpr lff" container style="height: 410px" class="shadow-2 rounded-borders">
-
       <q-drawer
         v-model="drawer"
         :width="200"
@@ -12,9 +11,13 @@
       >
         <q-scroll-area class="fit">
           <q-list>
-
             <template v-for="(menuItem, index) in menuList" :key="index">
-              <q-item clickable :active="menuItem.label === 'Outbox'" v-ripple>
+              <q-item 
+                clickable 
+                :active="currentMenu === menuItem.label" 
+                @click="setCurrentMenu(menuItem.label)" 
+                v-ripple
+              >
                 <q-item-section avatar>
                   <q-icon :name="menuItem.icon" />
                 </q-item-section>
@@ -24,16 +27,33 @@
               </q-item>
               <q-separator :key="'sep' + index" v-if="menuItem.separator" />
             </template>
-
           </q-list>
         </q-scroll-area>
       </q-drawer>
 
       <q-page-container style="margin-left: 200px;">
         <q-page padding>
-          <p v-for="n in 2" :key="n">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nihil praesentium molestias a adipisci, dolore vitae odit, quidem consequatur optio voluptates asperiores pariatur eos numquam rerum delectus commodi perferendis voluptate?
-          </p>
+          <div v-if="currentMenu === 'Inbox'">
+            <p>Show Inbox Content Here</p>
+          </div>
+          <div v-if="currentMenu === 'Outbox'">
+            <p>Show Outbox Content Here</p>
+          </div>
+          <div v-if="currentMenu === 'Trash'">
+            <p>Show Trash Content Here</p>
+          </div>
+          <div v-if="currentMenu === 'Spam'">
+            <p>Show Spam Content Here</p>
+          </div>
+          <div v-if="currentMenu === 'Settings'">
+            <p>Show Settings Here</p>
+          </div>
+          <div v-if="currentMenu === 'Send Feedback'">
+            <p>Show Feedback Form Here</p>
+          </div>
+          <div v-if="currentMenu === 'Help'">
+            <p>Show Help Content Here</p>
+          </div>
         </q-page>
       </q-page-container>
     </q-layout>
@@ -44,43 +64,19 @@
 import { ref } from 'vue'
 
 const drawer = ref(true)
+const currentMenu = ref('Inbox')
 
 const menuList = [
-  {
-    icon: 'inbox',
-    label: 'Inbox',
-    separator: true
-  },
-  {
-    icon: 'send',
-    label: 'Outbox',
-    separator: false
-  },
-  {
-    icon: 'delete',
-    label: 'Trash',
-    separator: false
-  },
-  {
-    icon: 'error',
-    label: 'Spam',
-    separator: true
-  },
-  {
-    icon: 'settings',
-    label: 'Settings',
-    separator: false
-  },
-  {
-    icon: 'feedback',
-    label: 'Send Feedback',
-    separator: false
-  },
-  {
-    icon: 'help',
-    iconColor: 'primary',
-    label: 'Help',
-    separator: false
-  }
+  { icon: 'inbox', label: 'Inbox', separator: true },
+  { icon: 'send', label: 'Outbox', separator: false },
+  { icon: 'delete', label: 'Trash', separator: false },
+  { icon: 'error', label: 'Spam', separator: true },
+  { icon: 'settings', label: 'Settings', separator: false },
+  { icon: 'feedback', label: 'Send Feedback', separator: false },
+  { icon: 'help', iconColor: 'primary', label: 'Help', separator: false }
 ]
+
+function setCurrentMenu(menuLabel) {
+  currentMenu.value = menuLabel
+}
 </script>
