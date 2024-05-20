@@ -46,7 +46,8 @@
             <p>Show Spam Content Here</p>
           </div>
           <div v-if="currentMenu === 'Settings'">
-            <p>Show Settings Here</p>
+            <MonacoEditor :src="msg1.value"></MonacoEditor>
+            <!-- <p>Show Settings Here</p> -->
           </div>
           <div v-if="currentMenu === 'Send Feedback'">
             <p>Show Feedback Form Here</p>
@@ -62,23 +63,40 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import AppHelp from '../components/AppHelp.vue'
+import MonacoEditor from '../components/MonacoEditor.vue'
+import getInterface from "../js/channel";
 
 const drawer = ref(true)
 const currentMenu = ref('Help')
 
 const menuList = [
-  { icon: 'inbox', label: 'Inbox', separator: true },
+  // { icon: 'inbox', label: 'Inbox', separator: true },
   { icon: 'send', label: 'Outbox', separator: false },
   { icon: 'delete', label: 'Trash', separator: false },
   { icon: 'error', label: 'Spam', separator: true },
   { icon: 'settings', label: 'Settings', separator: false },
-  { icon: 'feedback', label: 'Send Feedback', separator: false },
+  // { icon: 'feedback', label: 'Send Feedback', separator: false },
   { icon: 'help', iconColor: 'primary', label: 'Help', separator: false }
 ]
 
 function setCurrentMenu(menuLabel) {
   currentMenu.value = menuLabel
 }
+
+const msg1 = ref('');
+var channel;
+
+onMounted(async () => {
+  const channelInterface = await getInterface;
+  channelInterface.signal1.connect(data => {
+    msg1.value = data;
+    console.log(data)
+  });
+
+  channel = channelInterface;
+  channel.send_to_pyside("config");
+});
+
 </script>
