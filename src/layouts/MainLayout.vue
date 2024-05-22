@@ -21,17 +21,14 @@ function setCurrentMenu(menuLabel) {
   currentMenu.value = menuLabel
 }
 
-const msg1 = reactive({});
-const channel = reactive({});
-
 onMounted(async () => {
   const channelInterface = await getInterface;
   channelInterface.signal1.connect(data => {
-    msg1.value = data;
+    window.pysideConfig = data;
   });
 
-  channel.value = channelInterface;
-  channel.value.send_to_pyside("config"); // 通知pyside发数据给msg1.value
+  window.channel = channelInterface;
+  window.channel.send_to_pyside("config"); // 通知pyside发config过来
 });
 </script>
 
@@ -73,7 +70,7 @@ onMounted(async () => {
             <p>Show Spam Content Here</p>
           </div>
           <div v-if="currentMenu === 'Settings'">
-            <MonacoEditor v-model:modelValue="msg1.value" v-model:channel_monaco="channel.value"></MonacoEditor>
+            <MonacoEditor></MonacoEditor>
             <!-- <p>Show Settings Here</p> -->
           </div>
           <div v-if="currentMenu === 'Send Feedback'">
