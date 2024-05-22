@@ -1,38 +1,54 @@
 <script setup>
-import { onMounted, ref, watch, toRefs } from 'vue';
+import { defineProps, defineEmits, onMounted, watch } from 'vue';
 
 const props = defineProps({
-  src: {
+  modelValue: {
     type: Object,
     required: true,
     default: () => ({}),
   },
+  channel_monaco: {
+    type: Object,
+    required: true,
+  }
 });
 
-const { src } = toRefs(props);
+const emit = defineEmits(['update:modelValue']);
 
-const editorValue = ref(JSON.stringify(src.value, null, 2));
+let editor;
 
 onMounted(() => {
   require.config({ paths: { 'vs': './monaco-editor/min/vs' } });
   require(['vs/editor/editor.main'], () => {
-    const editor = monaco.editor.create(document.getElementById('container'), {
-      value: editorValue.value,
+    editor = monaco.editor.create(document.getElementById('container'), {
+      value: JSON.stringify(props.modelValue),
       language: 'json',
       automaticLayout: true
     });
 
-    // 监听编辑器内容变化
-    editor.onDidChangeModelContent(() => {
-      editorValue.value = editor.getValue();
-    });
+    if (editor) {
+      // 监听编辑器内容变化
+      editor.onDidChangeModelContent(() => {
+        const currentValue = JSON.parse(editor.getValue()); // 确保解析当前编辑器的值
+        props.channel_monaco.save_to_pyside(editor.getValue());
+        if (editor.getValue() !== JSON.stringify(props.modelValue)) {
+          emit('update:modelValue', currentValue); // 发出事件，通知父组件更新数据
+          console.log(currentValue)
+          console.log(props.modelValue)
+        }
+      });
+    }
   });
 });
 
-watch(editorValue, (newValue) => {
-  console.log('Editor value changed:', newValue);
-});
+// watch(() => props.modelValue, (newValue) => {
+//   const editorContent = JSON.stringify(newValue);
+//   if (editor && editor.getValue() !== editorContent) {
+//     editor.setValue(editorContent);
+//   }
+// }, { deep: true });
 </script>
+
 
 <template>
   <div id="container"></div>
