@@ -5,16 +5,16 @@ import MonacoEditor from '../components/MonacoEditor.vue'
 import getInterface from "../js/channel";
 
 const drawer = ref(true)
-const currentMenu = ref('Help')
+const currentMenu = ref('帮助')
 
 const menuList = [
   // { icon: 'inbox', label: 'Inbox', separator: true },
-  { icon: 'send', label: 'Outbox', separator: false },
-  { icon: 'delete', label: 'Trash', separator: false },
-  { icon: 'error', label: 'Spam', separator: true },
-  { icon: 'settings', label: 'Settings', separator: false },
+  { icon: 'send', label: '信息', separator: false },
+  // { icon: 'delete', label: 'Trash', separator: false },
+  // { icon: 'error', label: 'Spam', separator: true },
+  { icon: 'settings', label: '设置', separator: false },
   // { icon: 'feedback', label: 'Send Feedback', separator: false },
-  { icon: 'help', iconColor: 'primary', label: 'Help', separator: false }
+  { icon: 'help', iconColor: 'primary', label: '帮助', separator: false }
 ]
 
 function setCurrentMenu(menuLabel) {
@@ -60,8 +60,8 @@ onMounted(async () => {
           <div v-if="currentMenu === 'Inbox'">
             <p>Show Inbox Content Here</p>
           </div>
-          <div v-if="currentMenu === 'Outbox'">
-            <p>Show Outbox Content Here</p>
+          <div v-if="currentMenu === '信息'">
+            <p>Show information Content Here</p>
           </div>
           <div v-if="currentMenu === 'Trash'">
             <p>Show Trash Content Here</p>
@@ -69,16 +69,16 @@ onMounted(async () => {
           <div v-if="currentMenu === 'Spam'">
             <p>Show Spam Content Here</p>
           </div>
-          <div v-if="currentMenu === 'Settings'">
+          <div v-if="currentMenu === '设置'">
             <MonacoEditor></MonacoEditor>
-            <!-- <p>Show Settings Here</p> -->
+            <!-- <p>Show 设置 Here</p> -->
           </div>
           <div v-if="currentMenu === 'Send Feedback'">
             <p>Show Feedback Form Here</p>
           </div>
-          <div v-if="currentMenu === 'Help'">
+          <div v-if="currentMenu === '帮助'">
             <AppHelp></AppHelp>
-            <!-- <p>Show Help Content Here</p> -->
+            <!-- <p>Show 帮助 Content Here</p> -->
           </div>
         </q-page>
       </q-page-container>
