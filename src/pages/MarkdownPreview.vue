@@ -4,18 +4,17 @@
 
 <script setup>
 import { ref, onMounted, watch } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import 'github-markdown-css/github-markdown.css';
 import { renderMarkdown } from '../js/markdownRenderer.js';
 
 const mText = ref('');
 const route = useRoute();
-const router = useRouter();
 
 const fetchMarkdown = async (filename) => {
     try {
         console.log(filename)
-        const response = await fetch(`/src/md/${filename}.md`);
+        const response = await fetch(`/md/${filename}.md`);
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }

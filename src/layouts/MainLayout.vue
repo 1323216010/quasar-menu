@@ -1,15 +1,19 @@
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import AppHelp from '../components/AppHelp.vue'
 import MonacoEditor from '../components/MonacoEditor.vue'
 import MarkDown from "../components/MarkDown.vue";
 import getInterface from "../js/channel";
+import { useRouter } from 'vue-router';
 
 const drawer = ref(true)
-const currentMenu = ref('Inbox')
+const currentMenu = ref('文档')
+
+const router = useRouter();
+const iframeSrc = router.resolve({ name: 'IframePage' }).href;
 
 const menuList = [
-  { icon: 'inbox', label: 'Inbox', separator: true },
+  { icon: 'style', label: '文档', separator: true },
   { icon: 'send', label: '信息', separator: false },
   // { icon: 'delete', label: 'Trash', separator: false },
   // { icon: 'error', label: 'Spam', separator: true },
@@ -58,28 +62,29 @@ onMounted(async () => {
 
       <q-page-container style="margin-left: 200px;">
         <q-page padding>
-          <div v-if="currentMenu === 'Inbox'">
-            <q-page-container>
+          <div v-show="currentMenu === '文档'">
+            <iframe :src="iframeSrc" style="width: 100%; height: 100%;" frameborder="0"></iframe>
+            <!-- <q-page-container>
               <router-view />
-            </q-page-container>
+            </q-page-container> -->
           </div>
-          <div v-if="currentMenu === '信息'">
+          <div v-show="currentMenu === '信息'">
             <MarkDown></MarkDown>
           </div>
-          <div v-if="currentMenu === 'Trash'">
+          <div v-show="currentMenu === 'Trash'">
             <p>Show Trash Content Here</p>
           </div>
-          <div v-if="currentMenu === 'Spam'">
+          <div v-show="currentMenu === 'Spam'">
             <p>Show Spam Content Here</p>
           </div>
-          <div v-if="currentMenu === '设置'">
+          <div v-show="currentMenu === '设置'">
             <MonacoEditor></MonacoEditor>
             <!-- <p>Show 设置 Here</p> -->
           </div>
-          <div v-if="currentMenu === 'Send Feedback'">
+          <div v-show="currentMenu === 'Send Feedback'">
             <p>Show Feedback Form Here</p>
           </div>
-          <div v-if="currentMenu === '帮助'">
+          <div v-show="currentMenu === '帮助'">
             <AppHelp></AppHelp>
             <!-- <p>Show 帮助 Content Here</p> -->
           </div>

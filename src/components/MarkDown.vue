@@ -11,7 +11,7 @@ const mText = ref('');
 
 onMounted(async () => {
     try {
-        const response = await fetch('/src/md/e.md');
+        const response = await fetch('md/e.md');
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
