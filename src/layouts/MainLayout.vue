@@ -2,13 +2,14 @@
 import { ref, reactive, onMounted } from 'vue'
 import AppHelp from '../components/AppHelp.vue'
 import MonacoEditor from '../components/MonacoEditor.vue'
+import MarkDown from "../components/MarkDown.vue";
 import getInterface from "../js/channel";
 
 const drawer = ref(true)
-const currentMenu = ref('帮助')
+const currentMenu = ref('Inbox')
 
 const menuList = [
-  // { icon: 'inbox', label: 'Inbox', separator: true },
+  { icon: 'inbox', label: 'Inbox', separator: true },
   { icon: 'send', label: '信息', separator: false },
   // { icon: 'delete', label: 'Trash', separator: false },
   // { icon: 'error', label: 'Spam', separator: true },
@@ -58,10 +59,12 @@ onMounted(async () => {
       <q-page-container style="margin-left: 200px;">
         <q-page padding>
           <div v-if="currentMenu === 'Inbox'">
-            <p>Show Inbox Content Here</p>
+            <q-page-container>
+              <router-view />
+            </q-page-container>
           </div>
           <div v-if="currentMenu === '信息'">
-            <p>Show information Content Here</p>
+            <MarkDown></MarkDown>
           </div>
           <div v-if="currentMenu === 'Trash'">
             <p>Show Trash Content Here</p>
