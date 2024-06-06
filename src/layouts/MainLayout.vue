@@ -26,7 +26,34 @@ function setCurrentMenu(menuLabel) {
   currentMenu.value = menuLabel
 }
 
+function resizeIframe() {
+  const iframe = document.getElementById('contentIframe');
+  if (iframe && iframe.contentWindow && iframe.contentWindow.document.body) {
+    iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 10 + 'px';
+  }
+}
+
+function observeIframeContent() {
+  const iframe = document.getElementById('contentIframe');
+  if (iframe && iframe.contentWindow) {
+    const observer = new MutationObserver(resizeIframe);
+    observer.observe(iframe.contentWindow.document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true
+    });
+  }
+}
+
 onMounted(async () => {
+  const iframe = document.getElementById('contentIframe');
+  if (iframe) {
+    iframe.addEventListener('load', () => {
+      resizeIframe();
+      observeIframeContent();
+    });
+  }
+
   const channelInterface = await getInterface;
   channelInterface.signal1.connect(data => {
     window.pysideConfig = data;
@@ -63,7 +90,7 @@ onMounted(async () => {
       <q-page-container style="margin-left: 200px;">
         <q-page padding>
           <div v-show="currentMenu === '文档'">
-            <iframe :src="iframeSrc" style="width: 100%; height: 100%;" frameborder="0"></iframe>
+            <iframe id="contentIframe" :src="iframeSrc" style="width: 100%; height: 100%;" frameborder="0"></iframe>
             <!-- <q-page-container>
               <router-view />
             </q-page-container> -->

@@ -34,7 +34,7 @@ $$ \left(1 + \frac{r}{n}\right)^n = \left(e\right)^r = e^r $$
 
 
 
-## 2. 当 $n$ 趋向于无穷大时 $$\left(1 + \frac{1}{n}\right)^n \approx \sum_{k=0}^n \frac{1}{k!}$$
+## 2. 当 $n$ 趋向于无穷大时 $\left(1 + \frac{1}{n}\right)^n \approx \sum_{k=0}^n \frac{1}{k!}$
 
 其原因在于当 $n$ 趋向无穷大时，左边表达式的极限与右边无穷级数的和趋于相等。让我们深入理解这一点。
 
