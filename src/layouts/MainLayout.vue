@@ -29,7 +29,7 @@ function setCurrentMenu(menuLabel) {
 function resizeIframe() {
   const iframe = document.getElementById('contentIframe');
   if (iframe && iframe.contentWindow && iframe.contentWindow.document.body) {
-    iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 10 + 'px';
+    iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 50 + 'px';
   }
 }
 
