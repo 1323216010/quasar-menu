@@ -14,7 +14,7 @@ const route = useRoute();
 const fetchMarkdown = async (filename) => {
     try {
         console.log(filename)
-        const response = await fetch(`/md/${filename}.md`);
+        const response = await fetch(`./md/${filename}.md`);
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }

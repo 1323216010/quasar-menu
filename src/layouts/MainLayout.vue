@@ -7,14 +7,14 @@ import getInterface from "../js/channel";
 import { useRouter } from 'vue-router';
 
 const drawer = ref(true)
-const currentMenu = ref('文档')
+const currentMenu = ref('信息')
 
 const router = useRouter();
-const iframeSrc = router.resolve({ name: 'IframePage' }).href;
+// const iframeSrc = router.resolve({ name: 'IframePage' }).href;
 
 const menuList = [
-  { icon: 'style', label: '文档', separator: true },
-  { icon: 'send', label: '信息', separator: false },
+  // { icon: 'style', label: '文档', separator: true },
+  { icon: 'send', label: '信息', separator: true },
   // { icon: 'delete', label: 'Trash', separator: false },
   // { icon: 'error', label: 'Spam', separator: true },
   { icon: 'settings', label: '设置', separator: false },
@@ -26,33 +26,33 @@ function setCurrentMenu(menuLabel) {
   currentMenu.value = menuLabel
 }
 
-function resizeIframe() {
-  const iframe = document.getElementById('contentIframe');
-  if (iframe && iframe.contentWindow && iframe.contentWindow.document.body) {
-    iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 50 + 'px';
-  }
-}
+// function resizeIframe() {
+//   const iframe = document.getElementById('contentIframe');
+//   if (iframe && iframe.contentWindow && iframe.contentWindow.document.body) {
+//     iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 50 + 'px';
+//   }
+// }
 
-function observeIframeContent() {
-  const iframe = document.getElementById('contentIframe');
-  if (iframe && iframe.contentWindow) {
-    const observer = new MutationObserver(resizeIframe);
-    observer.observe(iframe.contentWindow.document.body, {
-      childList: true,
-      subtree: true,
-      attributes: true
-    });
-  }
-}
+// function observeIframeContent() {
+//   const iframe = document.getElementById('contentIframe');
+//   if (iframe && iframe.contentWindow) {
+//     const observer = new MutationObserver(resizeIframe);
+//     observer.observe(iframe.contentWindow.document.body, {
+//       childList: true,
+//       subtree: true,
+//       attributes: true
+//     });
+//   }
+// }
 
 onMounted(async () => {
-  const iframe = document.getElementById('contentIframe');
-  if (iframe) {
-    iframe.addEventListener('load', () => {
-      resizeIframe();
-      observeIframeContent();
-    });
-  }
+  // const iframe = document.getElementById('contentIframe');
+  // if (iframe) {
+  //   iframe.addEventListener('load', () => {
+  //     resizeIframe();
+  //     observeIframeContent();
+  //   });
+  // }
 
   const channelInterface = await getInterface;
   channelInterface.signal1.connect(data => {
@@ -89,12 +89,9 @@ onMounted(async () => {
 
       <q-page-container style="margin-left: 200px;">
         <q-page padding>
-          <div v-show="currentMenu === '文档'">
+          <!-- <div v-show="currentMenu === '文档'">
             <iframe id="contentIframe" :src="iframeSrc" style="width: 100%; height: 100%;" frameborder="0"></iframe>
-            <!-- <q-page-container>
-              <router-view />
-            </q-page-container> -->
-          </div>
+          </div> -->
           <div v-show="currentMenu === '信息'">
             <MarkDown></MarkDown>
           </div>
